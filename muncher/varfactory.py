@@ -55,35 +55,14 @@ class VarFactory:
 
     @staticmethod
     def getSmallName(index):
-        """gets a letter index based on the numeric index
 
+        """gets a letter index based on the numeric index
         Arguments:
         index -- the number you are looking for
-
         Returns:
         string
-
         """
-        # total number of combinations for this index size
-        combinations = 0
-        letters = 0
-        while (combinations + (((letters - 1) * 26) - 1) < index):
-            letters += 1
-            combinations = int(math.pow(len(VarFactory.letters), letters))
+        if index < 26:
+            return chr(index + 97)
 
-        if (index > 701):
-            raise Exception("until my math skillz get better we can only support 702 possibilities!")
-
-        a = int(index) + 1
-
-        if a < 27:
-            return chr(a + 96)
-
-        b = 0
-        while a > 26:
-            b += 1
-            a = a - 26
-
-        b = chr(b + 96)
-        a = chr(a + 96)
-        return b + a
+        return VarFactory.getSmallName(index / 26 - 1) + VarFactory.getSmallName(index % 26)
